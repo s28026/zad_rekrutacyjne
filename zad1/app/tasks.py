@@ -1,6 +1,4 @@
-from inspect import getmembers_static
 from celery import shared_task
-from flask import jsonify
 
 
 @shared_task(ignore_result=False)
@@ -20,4 +18,4 @@ def add_message(form_data):
     if not errors:
         add_message(title, message)
 
-    return {"errors": errors, "success": not errors}
+    return {"errors": errors, "success": len(errors) != 0}

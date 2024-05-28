@@ -18,7 +18,8 @@ def messages():
 def form():
     from .. import tasks
 
-    task = tasks.add_message.delay(request.form)
+    form_data = {key: value for key, value in request.form.items()}
+    task = tasks.add_message.delay(form_data)
     return jsonify({"task_id": task.id})
 
 
