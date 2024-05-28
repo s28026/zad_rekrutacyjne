@@ -52,3 +52,8 @@ def about():
 @main.route("/messages")
 def messages():
     return render_template("messages.html", messages=get_messages())
+
+
+@main.route("/loaderio-db4eac711abf523a22ce07379158aed8/")
+def loaderio():
+    return "loaderio-db4eac711abf523a22ce07379158aed8"
