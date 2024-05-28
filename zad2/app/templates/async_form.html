@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+  .form-async {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    margin: 0 auto;
+  }
+  .container {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    margin: 0 auto;
+    padding-bottom: 10px;
+  }
+</style>
+<h1>{% block title %} Add a New Message Asynchronously {% endblock %}</h1>
+<form method="post" class="form-async">
+  
+  <div class="container">
+    <label for="title">Title</label>
+    <input type="text" name="title" placeholder="Message title" value="{{ request.form['title'] }}"></input>
+    <div class="form-title-error alert"></div>
+  </div>
+
+  <div class="container">
+    <label for="content">Message Content</label>
+    <div class="form-message-error alert"></div>
+    <textarea name="content" placeholder="Message content" rows="15" cols="60">{{ request.form['content'] }}</textarea>
+  </div>
+  
+  <div class="container">
+    <div class="form-status"></div>
+    <button type="submit">Submit</button>
+  </div>
+</form>
+<script>
+  document.querySelector('form').addEventListener('submit', async (event) => {
+    event.preventDefault();
+    
+    for (const error of ["title", "message"]) {
+      document.querySelector(`.form-${error}-error`).innerHTML = "";
+      document.querySelector(`.form-${error}-error`).style.display = "none";
+    }
+    document.querySelector('.form-status').classList = "form-status";
+    document.querySelector('.form-status').innerHTML = "processing...";
+    
+    
+    const formData = new FormData(event.target);
+    const response = await fetch('/task/form', {
+      method: 'POST',
+      body: formData
+    });
+    const data = await response.json();
+    
+    if (response.ok) {
+      document.querySelector('.form-status').innerHTML = "processing...";
+      const { result: res, status } = await get_task_result(data.task_id);
+      document.querySelector('.form-status').innerHTML = "success";
+      
+      const { errors, success } = res;
+      
+      for (const [key, value] of Object.entries(errors)) {
+        apply_error(`.form-${key}-error`, value);
+      }
+      document.querySelector('.form-status').innerHTML = success ? "success" : "failed";
+      document.querySelector('.form-status').classList.add(!success ? "alert": "success");
+    }
+  });
+</script>
+{% endblock %}

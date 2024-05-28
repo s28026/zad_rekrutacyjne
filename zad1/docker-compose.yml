@@ -1,0 +1,27 @@
+services:
+  redis:
+    image: redis
+  web:
+    build:
+      context: .
+    environment:
+      FLASK_APP: run
+      FLASK_DEBUG: 1
+      FLASK_DATABASE: instance/database.db
+      CELERY_BROKER_URL: redis://redis
+      CELERY_RESULT_BACKEND: redis://redis
+    volumes:
+      - .:/app
+    command: flask run -h 0.0.0.0
+    ports:
+      - 5000:5000
+  celery:
+    build:
+      context: .
+    environment:
+      FLASK_APP: run
+    volumes:
+      - .:/app
+    command: celery -A run.celery worker --loglevel=info
+    depends_on:
+      - redis

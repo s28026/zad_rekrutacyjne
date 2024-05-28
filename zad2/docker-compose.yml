@@ -1,0 +1,29 @@
+services:
+  redis:
+    image: redis
+  web:
+    build:
+      context: .
+    environment:
+      DATABASE_URL: sqlite:///./instance/database.db
+      CELERY_BROKER_URL: redis://redis:6379/0
+      CELERY_RESULT_BACKEND: redis://redis:6379/0
+    volumes:
+      - .:/app
+    command: python main.py
+    ports:
+      - 5001:5000
+    depends_on:
+      - redis
+  celery:
+    build:
+      context: .
+    environment:
+      DATABASE_URL: sqlite:///./instance/database.db
+      CELERY_BROKER_URL: redis://redis:6379/0
+      CELERY_RESULT_BACKEND: redis://redis:6379/0
+    volumes:
+      - .:/app
+    command: celery -A app.celery worker --loglevel=info
+    depends_on:
+      - redis

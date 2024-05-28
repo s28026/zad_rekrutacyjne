@@ -1,0 +1,17 @@
+{% extends 'base.html' %} {% block content %}
+<h1>{% block title %} Polecenie {% endblock %}</h1>
+<p>
+  W ramach tego zadania trzeba postawic serwis w pythonowym Flasku(tutaj masz
+  przykładowy tutorial
+  https://medium.com/bhavaniravi/build-your-1st-python-web-app-with-flask-
+  b039d11f101c), który wyświetla jakąś strone internetową coś a'la hello world.
+  Następnie w ramach aplikacji trzeba stworzyć formularz, który zbiera dane od
+  użytkowników( przykładowo
+  https://www.digitalocean.com/community/tutorials/how-to-use-web-forms-in-a-flask-
+  application) Zakładam że stworzony w pierwszym kroku formularz będzie wysyłał
+  dan POST requestem w sposób synchroniczny. Dane powinny trafić do wybranej
+  przez Ciebie bazy danych. W kolejnym kroku trzeba stworzyć analogiczny
+  formularz na odrębnym templacie obsługiwany w sposób asynchroniczny przy
+  użyciu systemu kolejkowego np celery + redis
+</p>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{% block title %} Add a New Message {% endblock %}</h1>
+<form id="myForm" method="post">
+  <label for="title">Title</label>
+  {% if errors.title %}
+  <div class="alert">
+    {{ errors.title }}
+  </div>
+  {% else %}
+  <br>
+  {% endif %}
+  <input type="text" name="title" placeholder="Message title" value="{{ request.form['title'] }}"></input>
+  <br>
+
+  <label for="content">Message Content</label>
+  {% if errors.message %}
+  <div class="alert">
+    {{ errors.message }}
+  </div>
+  {% else %}
+  <br>
+  {% endif %}
+  <textarea name="content" placeholder="Message content" rows="15" cols="60">{{ request.form['content'] }}</textarea>
+  {% if not errors and success %}
+  <div class="success">submitted</div>
+  {% else %}
+  <br>
+  {% endif %}
+  <button type="submit">Submit</button>
+</form>
+{% endblock %}
