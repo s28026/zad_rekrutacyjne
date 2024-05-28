@@ -12,7 +12,7 @@ services:
       CELERY_RESULT_BACKEND: redis://redis
     volumes:
       - .:/app
-    command: flask run -h 0.0.0.0
+    command: python run.py
     ports:
       - 5000:5000
   celery:
