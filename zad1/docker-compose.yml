@@ -7,12 +7,12 @@ services:
     environment:
       FLASK_APP: run
       FLASK_DEBUG: 1
-      FLASK_DATABASE: instance/database.db
+      FLASK_DATABASE: ../instance/database.db
       CELERY_BROKER_URL: redis://redis
       CELERY_RESULT_BACKEND: redis://redis
     volumes:
       - .:/app
-    command: python run.py
+    command: uwsgi --http 0.0.0.0:5000 --master -p 4 -w run:app
     ports:
       - 5000:5000
   celery:

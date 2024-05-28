@@ -21,6 +21,10 @@ def create_app():
     celery = celery_init_app(app)
     init_routes(app)
 
+    # from werkzeug.middleware.proxy_fix import ProxyFix
+    #
+    # app.wsgi_app = ProxyFix(app.wsgi_app)
+
     return app, celery
 
 
