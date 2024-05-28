@@ -37,10 +37,6 @@ def form():
 
 @main.route("/async-form")
 def async_form():
-    if request.method == "POST":
-        tasks.add_message.delay(request.form)
-        return redirect(url_for("async_form"))
-
     return render_template("async_form.html", errors={}, success=False)
 
 
