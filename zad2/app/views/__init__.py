@@ -1,11 +1,7 @@
-from typing import Annotated
-from celery.utils.serialization import jsonify
-from fastapi import APIRouter, Depends, Form, Request
-from sqlalchemy import select, text
+from fastapi import APIRouter, Depends, Request
 from sqlalchemy.ext.asyncio import AsyncSession
 from fastapi.templating import Jinja2Templates
 
-from ..tasks import add_message
 from ..models.Message import Message
 
 from ..services.database import get_session

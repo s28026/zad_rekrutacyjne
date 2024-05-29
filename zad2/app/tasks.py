@@ -1,7 +1,6 @@
 from .services.database import get_session
 from .models.Message import Message
 from celery import shared_task
-from sqlalchemy.ext.asyncio import AsyncSession
 import asyncio
 
 
